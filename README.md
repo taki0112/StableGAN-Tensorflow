@@ -8,7 +8,8 @@ Simple Tensorflow implementation of Stabilizing Adversarial Nets With Prediction
 ```python
 
 from Adam_prediction import Adam_Prediction_Optimizer
-train_op = Adam_Prediction_Optimizer(learning_rate=0.001, beta1=0.9, beta2=0.99).minimize(loss)
+G_op = Adam_Prediction_Optimizer(learning_rate=0.001, beta1=0.9, beta2=0.999, prediction=True)
+D_op = Adam_Prediction_Optimizer(learning_rate=0.001, beta1=0.9, beta2=0.999, prediction=False)
 
 ```
 
