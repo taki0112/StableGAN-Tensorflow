@@ -35,7 +35,7 @@ class Adam_Prediction_Optimizer(optimizer.Optimizer):
     ([pdf](http://arxiv.org/pdf/1412.6980.pdf)).
     """
 
-    def __init__(self, learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8,
+    def __init__(self, learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, prediction=False,
                  use_locking=False, name="Adam"):
         """Construct a new Adam optimizer.
         Initialization:
@@ -85,6 +85,7 @@ class Adam_Prediction_Optimizer(optimizer.Optimizer):
         self._beta1 = beta1
         self._beta2 = beta2
         self._epsilon = epsilon
+        self._prediction = prediction
 
         # Tensor versions of the constructor arguments, created in _prepare().
         self._lr_t = None
@@ -186,8 +187,11 @@ class Adam_Prediction_Optimizer(optimizer.Optimizer):
         v_sqrt = math_ops.sqrt(v_t)
 
         # Prediction
-        var2 = 2 * (var - lr * m_t / (v_sqrt + epsilon_t))
-        var_update = state_ops.assign_sub(var2, var, use_locking=self._use_locking)
+        if self._prediction : # for G
+            var2 = 2 * (var - lr * m_t / (v_sqrt + epsilon_t))
+            var_update = state_ops.assign_sub(var2, var, use_locking=self._use_locking)
+        else :
+            var_update = state_ops.assign_sub(var, lr * m_t / (v_sqrt + epsilon_t), use_locking=self._use_locking)
 
         return control_flow_ops.group(*[var_update, m_t, v_t])
 
