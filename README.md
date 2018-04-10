@@ -25,7 +25,7 @@ D_op = Adam_Prediction_Optimizer(learning_rate=0.001, beta1=0.9, beta2=0.999, pr
 * adam-prediction : 7.17
 
 ## Related works
-* [Spectral Normalization[(https://github.com/taki0112/Spectral_Normalization-Tensorflow)
+* [Spectral Normalization-Tensorflow](https://github.com/taki0112/Spectral_Normalization-Tensorflow)
 
 ## Author
 Junho Kim
